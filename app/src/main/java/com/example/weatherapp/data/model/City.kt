@@ -10,7 +10,7 @@ data class City(
 	val name: String,
 
 	@SerializedName("weather")
-	val weather: Weather,
+	val weather: List<Weather>,
 
 	@SerializedName("main")
 	val temperature: Temperature
