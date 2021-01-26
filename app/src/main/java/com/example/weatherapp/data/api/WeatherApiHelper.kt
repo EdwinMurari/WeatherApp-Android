@@ -5,4 +5,6 @@ import retrofit2.http.Query
 class WeatherApiHelper(private val apiService: WeatherApiService) {
 
 	suspend fun getCurrentWeather(@Query("id") cityId: String, @Query("appid") apiKey: String, @Query("units") unit: String) = apiService.getCurrentWeather(cityId, apiKey, unit)
+
+	suspend fun getWeatherForecast(@Query("id") cityId: String, @Query("appid") apiKey: String, @Query("cnt") daysCount: Int, @Query("units") unit: String) = apiService.getWeatherForecast(cityId, apiKey, daysCount, unit)
 }

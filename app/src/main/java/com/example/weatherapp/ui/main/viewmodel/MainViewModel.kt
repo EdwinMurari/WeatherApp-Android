@@ -32,6 +32,15 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 		}
 	}
 
+	fun getWeatherForecast(cityId: String, daysCount: Int) = liveData(Dispatchers.IO) {
+		emit(Resource.loading(data = null))
+		try {
+			emit(Resource.success(data = mainRepository.getWeatherForecast(cityId, API_KEY, daysCount, UNIT_METRIC)))
+		} catch (exception: Exception) {
+			emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+		}
+	}
+
 	companion object{
 		const val API_KEY: String = "565c6f32012c8b89d9f0b59dfd5c77af"
 		const val CITYID_MELBOURNE: String = "2158177"

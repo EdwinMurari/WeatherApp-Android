@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.weatherapp.data.model.City
 import com.example.weatherapp.ui.main.view.WeatherFragment
 
-class ViewPagerAdapter2(fragmentManager: FragmentManager, private val cityList: ArrayList<City>) :
+class ViewPagerAdapter(fragmentManager: FragmentManager, private val cityList: ArrayList<City>) :
 	FragmentStatePagerAdapter(fragmentManager) {
 
 	override fun getItem(position: Int): Fragment {

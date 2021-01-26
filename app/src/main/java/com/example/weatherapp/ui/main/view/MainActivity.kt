@@ -14,7 +14,7 @@ import com.example.weatherapp.data.api.RetrofitBuilder
 import com.example.weatherapp.data.api.WeatherApiHelper
 import com.example.weatherapp.data.model.City
 import com.example.weatherapp.ui.base.ViewModelFactory
-import com.example.weatherapp.ui.main.adapter.ViewPagerAdapter2
+import com.example.weatherapp.ui.main.adapter.ViewPagerAdapter
 import com.example.weatherapp.ui.main.viewmodel.MainViewModel
 import com.example.weatherapp.ui.main.viewmodel.MainViewModel.Companion.CITYID_LIST
 import com.example.weatherapp.utils.Status
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 	private lateinit var viewPager: ViewPager
 	private lateinit var progressBar: ProgressBar
-	private lateinit var mViewPagerAdapter: ViewPagerAdapter2
+	private lateinit var mViewPagerAdapter: ViewPagerAdapter
 
 	private val Any.TAG: String
 		get() {
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 						viewPager.visibility = View.VISIBLE
 						progressBar.visibility = View.GONE
 
-						resource.data?.let { city -> updateViewPager(city) }
+						resource.data?.let { city -> updateViewPager(city, viewModel) }
 					}
 					Status.ERROR -> {
 						viewPager.visibility = View.VISIBLE
@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity() {
 		})
 	}
 
-	private fun updateViewPager(cities: MutableList<City>) {
-		mViewPagerAdapter = ViewPagerAdapter2(supportFragmentManager, cities as ArrayList<City>)
+	private fun updateViewPager(cities: MutableList<City>, viewModel: MainViewModel) {
+		mViewPagerAdapter = ViewPagerAdapter(supportFragmentManager, cities as ArrayList<City>)
 		viewPager.adapter = mViewPagerAdapter
 	}
 }
