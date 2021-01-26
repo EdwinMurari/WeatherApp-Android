@@ -12,7 +12,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 	fun getCurrentWeatherById() = liveData(Dispatchers.IO) {
 		emit(Resource.loading(data = null))
 		try {
-			emit(Resource.success(data = mainRepository.getCurrentWeather("2158177", "565c6f32012c8b89d9f0b59dfd5c77af")))
+			emit(Resource.success(data = mainRepository.getCurrentWeather(CITYID_MELBOURNE, API_KEY, UNIT_METRIC)))
 		} catch (exception: Exception) {
 			emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
 		}
@@ -23,7 +23,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 		try {
 			val cityList: MutableList<City> = mutableListOf()
 			for (cityId in cityIds) {
-				cityList.add(mainRepository.getCurrentWeather(cityId, API_KEY))
+				cityList.add(mainRepository.getCurrentWeather(cityId, API_KEY, UNIT_METRIC))
 			}
 
 			emit(Resource.success(data = cityList))
@@ -36,5 +36,6 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 		const val API_KEY: String = "565c6f32012c8b89d9f0b59dfd5c77af"
 		const val CITYID_MELBOURNE: String = "2158177"
 		val CITYID_LIST: Array<String> = arrayOf("2147714", "2063523", "2163355")
+		const val UNIT_METRIC = "metric"
 	}
 }

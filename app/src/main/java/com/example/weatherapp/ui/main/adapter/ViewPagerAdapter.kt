@@ -1,37 +1,19 @@
 package com.example.weatherapp.ui.main.adapter
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.viewpager.widget.PagerAdapter
-import com.example.weatherapp.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.weatherapp.data.model.City
+import com.example.weatherapp.ui.main.view.WeatherFragment
 
-class ViewPagerAdapter (private val mContext: Context, private  val itemList: ArrayList<City>) : PagerAdapter() {
-	private var layoutInflater: LayoutInflater? = null
+class ViewPagerAdapter2(fragmentManager: FragmentManager, private val cityList: ArrayList<City>) :
+	FragmentStatePagerAdapter(fragmentManager) {
 
-	override fun instantiateItem(container: ViewGroup, position: Int): Any {
-		layoutInflater = LayoutInflater.from(mContext)
-		val view = layoutInflater!!.inflate(R.layout.item_viewpage_layout, container, false)
-		val textView: TextView = view.findViewById(R.id.name_tv)
-		textView.text = itemList[position].name
-
-		container.addView(view, position)
-		return view
+	override fun getItem(position: Int): Fragment {
+		return WeatherFragment.newInstance(cityList[position])
 	}
 
 	override fun getCount(): Int {
-		return itemList.size
-	}
-
-	override fun isViewFromObject(view: View, obj: Any): Boolean {
-		return view === obj
-	}
-
-	override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-		val view = `object` as View
-		container.removeView(view)
+		return cityList.size
 	}
 }

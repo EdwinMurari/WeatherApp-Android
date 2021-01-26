@@ -7,6 +7,10 @@ import retrofit2.http.Query
 interface WeatherApiService {
 
 	@GET("weather")
-	suspend fun getCurrentWeather(@Query("id") id: String, @Query("appid") apiKey: String): City
+	suspend fun getCurrentWeather(
+		@Query("id") id: String,
+		@Query("appid") apiKey: String,
+		@Query("units") unit: String
+	): City
 
 }

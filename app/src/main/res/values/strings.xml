@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="placeholder_temperature">19</string>
+    <string name="placeholder_city">Melbourne</string>
+    <string name="placeholder_temperature_high_low">99/0</string>
+    <string name="placeholder_weather_condition">Clear text</string>
+    <string name="degree_symbol">°</string>
 </resources>
