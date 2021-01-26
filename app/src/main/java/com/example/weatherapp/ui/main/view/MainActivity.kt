@@ -2,6 +2,8 @@ package com.example.weatherapp.ui.main.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -20,6 +22,7 @@ import com.example.weatherapp.utils.Status
 class MainActivity : AppCompatActivity() {
 
 	private lateinit var viewPager: ViewPager
+	private lateinit var progressBar: ProgressBar
 	private lateinit var mViewPagerAdapter: ViewPagerAdapter2
 
 	private val Any.TAG: String
@@ -34,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
+		viewPager = findViewById(R.id.pager)
+		progressBar = findViewById(R.id.progressBar)
+
 		setupViewModel()
 		setupObservers()
 	}
@@ -46,46 +52,33 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun setupObservers() {
-		viewModel.getCurrentWeatherById().observe(this, Observer {
-			it?.let { resource ->
-				when (resource.status) {
-					Status.SUCCESS -> {
-						resource.data?.let { city -> test(city) }
-					}
-					Status.ERROR -> {
-						Log.e(TAG, " ${it.message}")
-						Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-					}
-					Status.LOADING -> {
-					}
-				}
-			}
-		})
-
 		viewModel.getCurrentWeatherByIds(CITYID_LIST).observe(this, Observer {
 			it?.let { resource ->
 				when (resource.status) {
 					Status.SUCCESS -> {
-						resource.data?.let { city -> initViewPager(city) }
+						viewPager.visibility = View.VISIBLE
+						progressBar.visibility = View.GONE
+
+						resource.data?.let { city -> updateViewPager(city) }
 					}
 					Status.ERROR -> {
+						viewPager.visibility = View.VISIBLE
+						progressBar.visibility = View.GONE
+
 						Log.e(TAG, " ${it.message}")
 						Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
 					}
 					Status.LOADING -> {
+						viewPager.visibility = View.GONE
+						progressBar.visibility = View.VISIBLE
 					}
 				}
 			}
 		})
 	}
 
-	private fun initViewPager(cities: MutableList<City>) {
-		viewPager = findViewById(R.id.pager)
+	private fun updateViewPager(cities: MutableList<City>) {
 		mViewPagerAdapter = ViewPagerAdapter2(supportFragmentManager, cities as ArrayList<City>)
 		viewPager.adapter = mViewPagerAdapter
-	}
-
-	private fun test(city: City) {
-		Log.e("MainActivity", "Retrieved test: ${city.name}")
 	}
 }
