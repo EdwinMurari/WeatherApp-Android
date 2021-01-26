@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.data.api.WeatherApiHelper
 import com.example.weatherapp.data.repository.MainRepository
-import com.example.weatherapp.ui.main.MainViewModel
+import com.example.weatherapp.ui.main.viewmodel.MainViewModel
 
 class ViewModelFactory(private val apiHelper: WeatherApiHelper) : ViewModelProvider.Factory {
 

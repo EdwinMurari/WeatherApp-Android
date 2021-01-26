@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.ui.main.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,11 +6,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.weatherapp.R
 import com.example.weatherapp.data.api.RetrofitBuilder
 import com.example.weatherapp.data.api.WeatherApiHelper
 import com.example.weatherapp.data.model.City
 import com.example.weatherapp.ui.base.ViewModelFactory
-import com.example.weatherapp.ui.main.MainViewModel
+import com.example.weatherapp.ui.main.viewmodel.MainViewModel
 import com.example.weatherapp.utils.Status
 
 class MainActivity : AppCompatActivity() {
