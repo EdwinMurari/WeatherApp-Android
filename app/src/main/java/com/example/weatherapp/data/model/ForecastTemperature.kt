@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ForecastTemperature(
 	@SerializedName("min")
-	val min: Float,
+	val tempMin: Float,
 
 	@SerializedName("max")
-	val max: Float
+	val tempMax: Float
 )

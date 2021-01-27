@@ -19,20 +19,26 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/weatherCondition_tv"
+            android:id="@+id/forecast_weatherCondition_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="@string/placeholder_weather_condition"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/temperatureHighLow_tv"
+            android:id="@+id/forecast_temperatureHiLo_tv"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
+            android:text="@string/placeholder_temperature_high_low"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weatherCondition_tv" />
+            app:layout_constraintTop_toBottomOf="@id/forecast_weatherCondition_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

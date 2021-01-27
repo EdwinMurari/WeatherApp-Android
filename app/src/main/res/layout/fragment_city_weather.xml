@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
     <TextView
@@ -35,7 +36,7 @@
         app:layout_constraintTop_toTopOf="@id/temperature_tv" />
 
     <TextView
-        android:id="@+id/temperatureHighLow_tv"
+        android:id="@+id/temperatureHiLo_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/placeholder_temperature_high_low"
@@ -52,5 +53,52 @@
         android:text="@string/placeholder_weather_condition"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/temperatureHighLow_tv" />
+        app:layout_constraintTop_toBottomOf="@id/temperatureHiLo_tv" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:id="@+id/forecastData_layout"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.example.weatherapp.ui.main.view.ForecastItemView
+            android:layout_width="0dp"
+            android:id="@+id/forecast1_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" />
+
+        <com.example.weatherapp.ui.main.view.ForecastItemView
+            android:layout_width="0dp"
+            android:layout_marginTop="12dp"
+            android:id="@+id/forecast2_view"
+            app:layout_constraintTop_toBottomOf="@id/forecast1_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" />
+
+        <com.example.weatherapp.ui.main.view.ForecastItemView
+            android:layout_width="0dp"
+            android:id="@+id/forecast3_view"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/forecast2_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/forecastData_layout"
+        app:layout_constraintStart_toStartOf="@id/forecastData_layout"
+        app:layout_constraintEnd_toEndOf="@id/forecastData_layout"
+        app:layout_constraintBottom_toBottomOf="@id/forecastData_layout"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,7 +18,6 @@ import com.example.weatherapp.data.model.City
 import com.example.weatherapp.data.model.Forecast
 import com.example.weatherapp.ui.base.ViewModelFactory
 import com.example.weatherapp.ui.main.viewmodel.MainViewModel
-import com.example.weatherapp.ui.main.viewmodel.MainViewModel.Companion.CITYID_MELBOURNE
 import com.example.weatherapp.utils.Status
 import com.example.weatherapp.utils.StringUtil
 
@@ -39,7 +40,7 @@ class WeatherFragment : Fragment() {
 
 		val cityNameTV = view.findViewById<TextView>(R.id.cityName_tv)
 		val temperatureTV = view.findViewById<TextView>(R.id.temperature_tv)
-		val temperatureHighLowTV = view.findViewById<TextView>(R.id.temperatureHighLow_tv)
+		val temperatureHighLowTV = view.findViewById<TextView>(R.id.temperatureHiLo_tv)
 		val weatherConditionTV = view.findViewById<TextView>(R.id.weatherCondition_tv)
 
 		val args = arguments
@@ -60,42 +61,82 @@ class WeatherFragment : Fragment() {
 	}
 
 	private fun initForecastData(view: View) {
-		viewModel = ViewModelProviders.of(
-			this,
-			ViewModelFactory(WeatherApiHelper(RetrofitBuilder.weatherApiService))
-		).get(MainViewModel::class.java)
+		val cityId = arguments?.getString(KEY_CITY_ID) ?: return;
 
-		viewModel.getWeatherForecast(CITYID_MELBOURNE, 3).observe(this, Observer {
+		initViewModel()
+
+		val forecastLayout = view.findViewById<ConstraintLayout>(R.id.forecastData_layout)
+		val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+
+		val forecast1DataView = view.findViewById<ForecastItemView>(R.id.forecast1_view)
+		val forecast2DataView = view.findViewById<ForecastItemView>(R.id.forecast2_view)
+		val forecast3DataView = view.findViewById<ForecastItemView>(R.id.forecast3_view)
+
+		viewModel.getWeatherForecast(cityId, 3).observe(this, Observer {
 			it?.let { resource ->
 				when (resource.status) {
 					Status.SUCCESS -> {
-						resource.data?.let { forecastData -> updateForecastData(forecastData) }
+						forecastLayout.visibility = View.VISIBLE
+						progressBar.visibility = View.GONE
+
+						resource.data?.let { forecastData ->
+							updateForecastData(
+								arrayOf(
+									forecast1DataView,
+									forecast2DataView,
+									forecast3DataView
+								), forecastData
+							)
+						}
 					}
 					Status.ERROR -> {
+						forecastLayout.visibility = View.VISIBLE
+						progressBar.visibility = View.GONE
+
 						Log.e(TAG, " ${it.message}")
 					}
 					Status.LOADING -> {
+
+						forecastLayout.visibility = View.INVISIBLE
+						progressBar.visibility = View.VISIBLE
 					}
 				}
 			}
 		})
 	}
 
-	private fun updateForecastData(forecastData: Forecast) {
-		Log.e("TEST", "forecastData: ${forecastData.data.size}")
+	private fun initViewModel() {
+		viewModel = ViewModelProviders.of(
+			this,
+			ViewModelFactory(WeatherApiHelper(RetrofitBuilder.weatherApiService))
+		).get(MainViewModel::class.java)
+	}
+
+	private fun updateForecastData(
+		forecastDataViews: Array<ForecastItemView>,
+		forecastData: Forecast
+	) {
+		forecastDataViews[0].setupUpData(forecastData.data[0])
+		forecastDataViews[1].setupUpData(forecastData.data[1])
+		forecastDataViews[2].setupUpData(forecastData.data[2])
 	}
 
 	companion object {
 
 		private const val KEY_CITY_NAME = "cityName"
+		private const val KEY_CITY_ID = "cityId"
 		private const val KEY_TEMPERATURE = "temperature"
 		private const val KEY_TEMPERATURE_HI_LO = "temperatureHiLo"
 		private const val KEY_CONDITION = "condition"
+
+		private const val DEGREE_SYMBOL = "°";
+		private const val SEPARATOR = " / ";
 
 		fun newInstance(city: City): WeatherFragment {
 
 			val args = Bundle()
 			args.putString(KEY_CITY_NAME, city.name)
+			args.putString(KEY_CITY_ID, city.id)
 			args.putString(
 				KEY_TEMPERATURE,
 				StringUtil.getTemperatureString(city.temperature.current)
@@ -103,10 +144,10 @@ class WeatherFragment : Fragment() {
 			args.putString(
 				KEY_TEMPERATURE_HI_LO, (
 						StringUtil.getTemperatureString(city.temperature.tempMax) +
-								"\u00B0" +
-								" / " +
+								DEGREE_SYMBOL +
+								SEPARATOR +
 								StringUtil.getTemperatureString(city.temperature.tempMin) +
-								"\u00B0")
+								DEGREE_SYMBOL)
 			)
 			args.putString(KEY_CONDITION, city.weather[0].condition)
 

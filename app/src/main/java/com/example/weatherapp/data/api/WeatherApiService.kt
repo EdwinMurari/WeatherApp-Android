@@ -14,11 +14,12 @@ interface WeatherApiService {
 		@Query("units") unit: String
 	): City
 
-	@GET("forecast")
+	@GET("forecast/daily")
 	suspend fun getWeatherForecast(
 		@Query("id") id: String,
 		@Query("appid") apiKey: String,
 		@Query("cnt") daysCount: Int,
-		@Query("units") unit: String
+		@Query("units") unit: String,
+		@Query("mode") mode: String
 	): Forecast
 }

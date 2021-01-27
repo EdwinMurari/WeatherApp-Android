@@ -18,16 +18,15 @@ class RecyclerAdapter(private val foreCastData: ArrayList<ForecastData>) :
 	}
 
 	override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-		val hiLoString =
+		/*val hiLoString =
 			StringUtil.getTemperatureString(foreCastData[i].temperature.max) +
 					"\u00B0" +
 					" / " +
-					StringUtil.getTemperatureString(foreCastData[i].temperature.max) +
+					StringUtil.getTemperatureString(foreCastData[i].temperature.min) +
 					"\u00B0";
 
 		viewHolder.weatherConditionTV.text = foreCastData[i].weather[0].condition
-		viewHolder.temperatureHighLowTV.text = hiLoString;
-
+		viewHolder.temperatureHighLowTV.text = hiLoString;*/
 	}
 
 	override fun getItemCount(): Int {
@@ -41,7 +40,7 @@ class RecyclerAdapter(private val foreCastData: ArrayList<ForecastData>) :
 
 		init {
 			weatherConditionTV = itemView.findViewById(R.id.weatherCondition_tv)
-			temperatureHighLowTV = itemView.findViewById(R.id.temperatureHighLow_tv)
+			temperatureHighLowTV = itemView.findViewById(R.id.temperatureHiLo_tv)
 		}
 	}
 }
