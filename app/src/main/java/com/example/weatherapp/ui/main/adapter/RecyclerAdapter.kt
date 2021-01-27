@@ -6,41 +6,55 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
+import com.example.weatherapp.data.model.Forecast
 import com.example.weatherapp.data.model.ForecastData
+import com.example.weatherapp.ui.main.view.ForecastItemView
+import com.example.weatherapp.utils.DateUtil
 import com.example.weatherapp.utils.StringUtil
 
 class RecyclerAdapter(private val foreCastData: ArrayList<ForecastData>) :
 	RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+
 	override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-		val v = LayoutInflater.from(viewGroup.context)
+		val view = LayoutInflater.from(viewGroup.context)
 			.inflate(R.layout.item_forecast, viewGroup, false)
-		return ViewHolder(v)
+
+		return ViewHolder(view)
 	}
 
 	override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-		/*val hiLoString =
-			StringUtil.getTemperatureString(foreCastData[i].temperature.max) +
-					"\u00B0" +
-					" / " +
-					StringUtil.getTemperatureString(foreCastData[i].temperature.min) +
-					"\u00B0";
+		val hiLoString = StringUtil.getTemperatureString(foreCastData[i].temperature.tempMax) +
+				StringUtil.DEGREE_SYMBOL +
+				StringUtil.HI_LOW_SEPARATOR +
+				StringUtil.getTemperatureString(foreCastData[i].temperature.tempMin) +
+				StringUtil.DEGREE_SYMBOL;
 
+		viewHolder.forecastDate.text = DateUtil.getDateTime(foreCastData[i].date)
 		viewHolder.weatherConditionTV.text = foreCastData[i].weather[0].condition
-		viewHolder.temperatureHighLowTV.text = hiLoString;*/
+		viewHolder.temperatureHiLoTV.text = hiLoString
 	}
 
 	override fun getItemCount(): Int {
 		return foreCastData.size
 	}
 
+	fun updateItems(foreCastData: List<ForecastData>) {
+		this.foreCastData.apply {
+			clear()
+			addAll(foreCastData)
+		}
+	}
+
 	inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+		var forecastDate: TextView
 		var weatherConditionTV: TextView
-		var temperatureHighLowTV: TextView
+		var temperatureHiLoTV: TextView
 
 		init {
-			weatherConditionTV = itemView.findViewById(R.id.weatherCondition_tv)
-			temperatureHighLowTV = itemView.findViewById(R.id.temperatureHiLo_tv)
+			forecastDate = itemView.findViewById<TextView>(R.id.forecast_date)
+			weatherConditionTV = itemView.findViewById<TextView>(R.id.forecast_weatherCondition_tv)
+			temperatureHiLoTV = itemView.findViewById<TextView>(R.id.forecast_temperatureHiLo_tv)
 		}
 	}
 }

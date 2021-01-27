@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.main.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -58,6 +59,12 @@ class WeatherFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 		initForecastData(view)
+
+		view.findViewById<View>(R.id.moreForecast_btn)?.setOnClickListener {
+			val intent = Intent(context, MoreForecastActivity::class.java)
+			intent.putExtra(INTENT_EXTRA_CITY_ID, arguments?.getString(KEY_CITY_ID))
+			startActivity(intent)
+		}
 	}
 
 	private fun initForecastData(view: View) {
@@ -131,6 +138,8 @@ class WeatherFragment : Fragment() {
 
 		private const val DEGREE_SYMBOL = "°";
 		private const val SEPARATOR = " / ";
+
+		const val INTENT_EXTRA_CITY_ID = "intent_extra_city_id"
 
 		fun newInstance(city: City): WeatherFragment {
 

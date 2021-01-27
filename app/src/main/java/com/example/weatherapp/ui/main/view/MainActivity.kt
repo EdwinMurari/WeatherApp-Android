@@ -37,18 +37,21 @@ class MainActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
-		viewPager = findViewById(R.id.pager)
-		progressBar = findViewById(R.id.progressBar)
-
-		setupViewModel()
+		initViewModel()
+		initUi()
 		setupObservers()
 	}
 
-	private fun setupViewModel() {
+	private fun initViewModel() {
 		viewModel = ViewModelProviders.of(
 			this,
 			ViewModelFactory(WeatherApiHelper(RetrofitBuilder.weatherApiService))
 		).get(MainViewModel::class.java)
+	}
+
+	private fun initUi(){
+		viewPager = findViewById(R.id.pager)
+		progressBar = findViewById(R.id.progressBar)
 	}
 
 	private fun setupObservers() {
