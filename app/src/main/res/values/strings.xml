@@ -5,4 +5,5 @@
     <string name="placeholder_temperature_high_low">99/0</string>
     <string name="placeholder_weather_condition">Clear text</string>
     <string name="degree_symbol">°</string>
+    <string name="placeholder_forecast_date">Sun, 10 Jan</string>
 </resources>

@@ -72,7 +72,7 @@ class WeatherFragment : Fragment() {
 		val forecast2DataView = view.findViewById<ForecastItemView>(R.id.forecast2_view)
 		val forecast3DataView = view.findViewById<ForecastItemView>(R.id.forecast3_view)
 
-		viewModel.getWeatherForecast(cityId, 3).observe(this, Observer {
+		viewModel.getWeatherForecast(cityId, 4).observe(this, Observer {
 			it?.let { resource ->
 				when (resource.status) {
 					Status.SUCCESS -> {
@@ -116,9 +116,9 @@ class WeatherFragment : Fragment() {
 		forecastDataViews: Array<ForecastItemView>,
 		forecastData: Forecast
 	) {
-		forecastDataViews[0].setupUpData(forecastData.data[0])
-		forecastDataViews[1].setupUpData(forecastData.data[1])
-		forecastDataViews[2].setupUpData(forecastData.data[2])
+		forecastDataViews[0].setupUpData(forecastData.data[1])
+		forecastDataViews[1].setupUpData(forecastData.data[2])
+		forecastDataViews[2].setupUpData(forecastData.data[3])
 	}
 
 	companion object {
