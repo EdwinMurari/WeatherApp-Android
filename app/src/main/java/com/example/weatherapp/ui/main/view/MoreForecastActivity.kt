@@ -1,13 +1,12 @@
 package com.example.weatherapp.ui.main.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
@@ -54,27 +53,9 @@ class MoreForecastActivity : AppCompatActivity() {
 		recyclerView = findViewById(R.id.recyclerView)
 		progressBar = findViewById(R.id.progressBar)
 
-		/*recyclerView.layoutManager = LinearLayoutManager(this)
+		recyclerView.layoutManager = LinearLayoutManager(this)
 		adapter = RecyclerAdapter(arrayListOf())
-		recyclerView.adapter = adapter*/
-
-		/*recyclerView.apply {
-			// set a LinearLayoutManager to handle Android
-			// RecyclerView behavior
-			layoutManager = LinearLayoutManager(this@MoreForecastActivity)
-			// set the custom adapter to the RecyclerView
-			adapter = RecyclerAdapter(arrayListOf())
-		}*/
-
-			recyclerView.layoutManager = LinearLayoutManager(this)
-			adapter = RecyclerAdapter(arrayListOf())
-			recyclerView.addItemDecoration(
-				DividerItemDecoration(
-					recyclerView.context,
-					(recyclerView.layoutManager as LinearLayoutManager).orientation
-				)
-			)
-			recyclerView.adapter = adapter
+		recyclerView.adapter = adapter
 	}
 
 	private fun setupObservers() {
@@ -108,7 +89,6 @@ class MoreForecastActivity : AppCompatActivity() {
 	}
 
 	private fun updateList(forecast: Forecast) {
-		Log.e("TEST", "${forecast.data.size}")
 		adapter.apply {
 			updateItems(forecast.data)
 			notifyDataSetChanged()
