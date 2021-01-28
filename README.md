@@ -1,2 +1,4 @@
 # WeatherApp-Android
-A sample project to demonstrate my knowledge of Kotlin, coroutines, unit-testing, source control on github, etc.
+
+Assumptions made: 
+- Forecast data included the current day data as well at 0th index.
